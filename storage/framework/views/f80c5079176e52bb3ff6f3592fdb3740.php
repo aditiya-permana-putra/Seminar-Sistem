@@ -15,7 +15,7 @@
                     <th>Tanggal</th>
                     <th>Lokasi</th>
                     <th>Status</th>
-                    <th>Status Manager Umum</th>
+                    <th>Diposisi Manager Operasional & Umum</th>
                     <th>Aksi</th>
                 </tr>
             </thead>

@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group col-12 col-md-4">
                     <label for="lokasi">Lokasi:</label>
-                    <input type="text" class="form-control" id="lokasi" name="lokasi" required>
+                    <input type="text" class="form-control" id="lokasi" name="lokasi" value="-" required>
                 </div>
             </div>
             <h5 class="mt-4">Daftar Barang</h5>
@@ -62,7 +62,7 @@
             const gambarCell = newRow.insertCell(4);
             const aksiCell = newRow.insertCell(5);
 
-            jenisBarangCell.innerHTML = '<input type="text" class="form-control" name="jenis_barang[]" required>';
+            jenisBarangCell.innerHTML = '<input type="text" class="form-control" name="jenis_barang[]" value="-" required>';
             namaBarangCell.innerHTML = '<input type="text" class="form-control" name="nama_barang[]" required>';
             uraianMasalahCell.innerHTML = '<input type="text" class="form-control" name="uraian_masalah[]" required>';
             keteranganCell.innerHTML = '<input type="text" class="form-control" name="keterangan[]" required>';

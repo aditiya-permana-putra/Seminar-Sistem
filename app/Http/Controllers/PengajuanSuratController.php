@@ -166,7 +166,7 @@ class PengajuanSuratController extends Controller
 
         // Proses disposisi
         $disposisi = implode(', ', $request->pilihan);
-        $surat->disposisi = 'Setuju,' . $disposisi;
+        $surat->disposisi =  $disposisi;
         $surat->status = $request->status;
 
         $surat->tgl_disposisi = now();
@@ -183,25 +183,6 @@ class PengajuanSuratController extends Controller
         return redirect()->back()->with('success', 'Surat berhasil disposisi.');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         // Temukan surat berdasarkan ID
@@ -214,17 +195,6 @@ class PengajuanSuratController extends Controller
         return view('pages.pengajuan-surat.show', compact('surat', 'barang'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(string $id)
     {
         // Temukan surat berdasarkan ID
@@ -236,13 +206,5 @@ class PengajuanSuratController extends Controller
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Surat berhasil diselesaikan prosesnya.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

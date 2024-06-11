@@ -29,7 +29,6 @@
                             <td><?php echo e($surat->tanggal); ?></td>
                             <td><?php echo e($surat->lokasi); ?></td>
                             <td><?php echo e($surat->status); ?></td>
-                            
                             <td>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('approve-manager-klinik')): ?>
                                     <a href="<?php echo e(route('pengajuan-surat.show', $surat->id)); ?>"

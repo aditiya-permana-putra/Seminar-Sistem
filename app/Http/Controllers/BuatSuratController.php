@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BarangModel;
 use Log;
 use App\Models\SuratModel;
 use Illuminate\Http\Request;
@@ -101,18 +102,46 @@ class BuatSuratController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $barang = BarangModel::findOrFail($id);
+        return view('barang.edit', compact('barang'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $barang = BarangModel::findOrFail($id);
+
+        // Jika ada gambar yang diunggah untuk barang tertentu
+        if ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
+            $foto = $request->file('gambar');
+            $imageName = time() . '_' . $foto->getClientOriginalName();
+            $foto->move(public_path('assets/image'), $imageName);
+
+            // Hapus gambar lama jika ada
+            if ($barang->gambar && file_exists(public_path('assets/image/' . $barang->gambar))) {
+                unlink(public_path('assets/image/' . $barang->gambar));
+            }
+
+            // Simpan nama gambar baru ke dalam data barang
+            $barang->gambar = $imageName;
+        }
+
+        // Update data barang
+        $barang->jenis_barang = $request->jenis_barang;
+        $barang->nama_barang = $request->nama_barang;
+        $barang->uraian_masalah = $request->uraian_masalah;
+        $barang->keterangan = $request->keterangan;
+        $barang->save();
+
+        return redirect()->back()->with('success', 'Surat dan barang berhasil disimpan.');
     }
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -137,6 +166,14 @@ class BuatSuratController extends Controller
         $surat->delete();
 
         // Redirect kembali dengan pesan sukses
-        return redirect()->route('buat-surat.index')->with('success', 'Surat dan barang terkait berhasil dihapus.');
+        return redirect()->back()->with('success', 'Surat dan barang berhasil Dihapus.');
+    }
+
+    public function destroybarang($id)
+    {
+        $barang = BarangModel::findOrFail($id);
+        $barang->delete();
+
+        return redirect()->back()->with('success', 'barang berhasil dihapus.');
     }
 }

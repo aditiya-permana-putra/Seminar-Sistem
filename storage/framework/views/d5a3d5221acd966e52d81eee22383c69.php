@@ -36,6 +36,7 @@
                             <th>Uraian Masalah</th>
                             <th>Keterangan</th>
                             <th>Gambar</th>
+                            <th>Biaya</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -50,9 +51,10 @@
                                     <td>
                                         <?php if($barang->gambar): ?>
                                             <img src="<?php echo e(asset('assets/image/' . $barang->gambar)); ?>"
-                                                alt="<?php echo e($barang->nama_barang); ?>" style="max-width: 200px;">
+                                                alt="<?php echo e($barang->nama_barang); ?>" style="max-width: 100px;">
                                         <?php endif; ?>
                                     </td>
+                                    <td><?php echo e($barang->biaya); ?></td>
                                     <td>
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('approve-kepala-bidang')): ?>
                                             <!-- Button trigger modal -->

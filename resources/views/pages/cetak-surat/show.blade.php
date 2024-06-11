@@ -19,7 +19,7 @@
             <p><strong>Tanggal:</strong> {{ $surat->tanggal }}</p>
             <p><strong>Lokasi:</strong> {{ $surat->lokasi }}</p>
             <p><strong>Status:</strong> {{ $surat->status }}</p>
-            <p><strong>Status:</strong> {{ $surat->disposisi }}</p>
+            <p><strong>Disposisi:</strong> {{ $surat->disposisi }}</p>
 
         </div>
     </div>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BuatSuratController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CetakSuratController;
 use App\Http\Controllers\UserKaryawanController;
@@ -58,6 +59,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Buat Surat
     Route::resource('buat-surat', \App\Http\Controllers\BuatSuratController::class);
+    Route::get('/barang/{id}/edit', [BuatSuratController::class, 'edit'])->name('barang.edit');
+    Route::put('/barang/{id}', [BuatSuratController::class, 'update'])->name('barang.update');
+    // Route untuk menghapus data barang
+    Route::delete('/barang/{id}', [BuatSuratController::class, 'destroybarang'])->name('barang.destroybarang');
 
     //Pengajuan Surat
     Route::resource('pengajuan-surat', \App\Http\Controllers\PengajuanSuratController::class);
@@ -90,5 +95,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('cetak-surat/disposisi/{id}', [CetakSuratController::class, 'cetakdisposisi'])->name('cetak-surat.cetakdisposisi');
 
     Route::get('/cetak-diposisi', [CetakSuratController::class, 'indexx'])->name('disposisi.index');
-
 });

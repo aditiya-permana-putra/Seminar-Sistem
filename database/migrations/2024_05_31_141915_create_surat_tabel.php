@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('lokasi');
             $table->string('status')->nullable()->default('Pending');
             $table->string('lampiran')->nullable();
-            $table->string('disposisi')->nullable();
+            $table->string('disposisi')->nullable()->default('Pending');
             $table->string('tgl_disposisi')->nullable();
             $table->timestamps();
         });

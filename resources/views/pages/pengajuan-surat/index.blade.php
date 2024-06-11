@@ -29,22 +29,6 @@
                             <td>{{ $surat->tanggal }}</td>
                             <td>{{ $surat->lokasi }}</td>
                             <td>{{ $surat->status }}</td>
-                            {{-- <td>
-                            <ul>
-                                @foreach ($surat->barang as $barang)
-                                    <li>
-                                        Jenis: {{ $barang->jenis_barang }}<br>
-                                        Nama: {{ $barang->nama_barang }}<br>
-                                        Uraian Masalah: {{ $barang->uraian_masalah }}<br>
-                                        Keterangan: {{ $barang->keterangan }}<br>
-                                        @if ($barang->gambar)
-                                            <img src="{{ asset('assets/image/' . $barang->gambar) }}"
-                                                alt="{{ $barang->nama_barang }}" style="max-width: 100px;">
-                                        @endif
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </td> --}}
                             <td>
                                 @can('approve-manager-klinik')
                                     <a href="{{ route('pengajuan-surat.show', $surat->id) }}"

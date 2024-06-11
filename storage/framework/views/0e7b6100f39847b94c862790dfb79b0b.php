@@ -19,7 +19,7 @@
             <p><strong>Tanggal:</strong> <?php echo e($surat->tanggal); ?></p>
             <p><strong>Lokasi:</strong> <?php echo e($surat->lokasi); ?></p>
             <p><strong>Status:</strong> <?php echo e($surat->status); ?></p>
-            <p><strong>Status:</strong> <?php echo e($surat->disposisi); ?></p>
+            <p><strong>Disposisi:</strong> <?php echo e($surat->disposisi); ?></p>
 
         </div>
     </div>

@@ -36,6 +36,7 @@
                             <th>Uraian Masalah</th>
                             <th>Keterangan</th>
                             <th>Gambar</th>
+                            <th>Biaya</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -50,9 +51,10 @@
                                     <td>
                                         @if ($barang->gambar)
                                             <img src="{{ asset('assets/image/' . $barang->gambar) }}"
-                                                alt="{{ $barang->nama_barang }}" style="max-width: 200px;">
+                                                alt="{{ $barang->nama_barang }}" style="max-width: 100px;">
                                         @endif
                                     </td>
+                                    <td>{{ $barang->biaya }}</td>
                                     <td>
                                         @can('approve-kepala-bidang')
                                             <!-- Button trigger modal -->

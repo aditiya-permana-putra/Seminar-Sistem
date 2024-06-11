@@ -50,7 +50,7 @@
                                     <td>
                                         @if ($barang->gambar)
                                             <img src="{{ asset('assets/image/' . $barang->gambar) }}"
-                                                alt="{{ $barang->nama_barang }}" style="max-width: 200px;">
+                                                alt="{{ $barang->nama_barang }}" style="max-width: 100px;">
                                         @endif
                                     </td>
                                     <td>
@@ -92,14 +92,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-
-
-
-
-
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#exampleModal{{ $barang->id }}">

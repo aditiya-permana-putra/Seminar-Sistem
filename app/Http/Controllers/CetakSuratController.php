@@ -7,6 +7,8 @@ use App\Models\SuratModel;
 use App\Models\BarangModel;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Illuminate\Http\Request;
+use App\Pdf\CustomFpdf; // Import the custom FPDF class
+
 
 class CetakSuratController extends Controller
 {
@@ -141,6 +143,8 @@ class CetakSuratController extends Controller
         $pdf->Image($imagePath, 10, 280, 50); // Ganti 10 dengan tinggi gambar yang diinginkan
     }
 
+
+
     public function cetak(Request $request, $id)
     {
         $barangIds = $request->input('barang');
@@ -157,7 +161,7 @@ class CetakSuratController extends Controller
         $selectedBarang = BarangModel::whereIn('id', $barangIds)->get();
 
         // Membuat PDF
-        $pdf = new FPDF();
+        $pdf = new CustomFpdf();
         $pdf->AddPage();
         $this->Header($pdf, $id); // Panggil metode Header dengan menyertakan ID surat
 
@@ -194,29 +198,43 @@ class CetakSuratController extends Controller
         $pdf->Cell($colWidth1, 10, 'Jabatan / Unit Kerja', 0, 0);
         $pdf->Cell($colWidth2, 10, ': ' . $surat->user->jabatan, 0, 1);
 
-        $barang = $selectedBarang->first();
-        if ($barang) {
-            $pdf->Cell($colWidth1, 0, 'Jenis Barang / Merk', 0, 0);
-            $pdf->Cell($colWidth2, 0, ': ' . $barang->jenis_barang, 0, 1);
-        }
+
+        $pdf->Cell($colWidth1, 0, 'Jenis Barang / Merk', 0, 0);
+        $pdf->Cell($colWidth2, 0, ': ' . '-', 0, 1);
+
 
         $pdf->Cell($colWidth1, 10, 'Lokasi yang diminta', 0, 0);
-        $pdf->Cell($colWidth2, 10, ': ' . $surat->lokasi, 0, 1);
+        $pdf->Cell($colWidth2, 10, ': ' . '-', 0, 1);
 
-        // Daftar Barang
-        $pdf->Ln(10); // Spasi
-        $pdf->SetFont('Times', '', 12);
-        $pdf->Cell(10, 10, 'No', 1, 0, 'C'); // Tambahkan kolom nomor
-        $pdf->Cell(40, 10, 'Nama Barang', 1, 0, 'C');
-        $pdf->Cell(105, 10, 'Uraian Masalah', 1, 0, 'C');
-        $pdf->Cell(35, 10, 'Keterangan', 1, 1, 'C');
+        $header = ['No', 'Nama Barang', 'Uraian Masalah', 'Keterangan'];
+        $w = [10, 40, 105, 35];
 
-        $pdf->SetFont('Times', '', 12);
+        $pdf->SetFont('Arial', 'B', 12);
+        foreach ($header as $i => $col) {
+            $pdf->Cell($w[$i], 10, $col, 1, 0, 'C');
+        }
+        $pdf->Ln();
+
+        $pdf->SetFont('Arial', '', 12);
         foreach ($selectedBarang as $index => $barang) {
-            $pdf->Cell(10, 10, $index + 1, 1, 0, 'C'); // Nomor
-            $pdf->Cell(40, 10, $barang->nama_barang, 1, 0); // Nama Barang
-            $pdf->Cell(105, 10, $barang->uraian_masalah, 1, 0); // Uraian Masalah
-            $pdf->Cell(35, 10, $barang->keterangan, 1, 1); // Keterangan
+            $nb = max(
+                $pdf->NbLines($w[0], $index + 1),
+                $pdf->NbLines($w[1], $barang->nama_barang),
+                $pdf->NbLines($w[2], $barang->uraian_masalah),
+                $pdf->NbLines($w[3], $barang->keterangan)
+            );
+            $h = 10 * $nb;
+
+            $pdf->CheckPageBreak($h);
+
+            $pdf->Cell($w[0], $h, $index + 1, 1, 0, 'C');
+            $pdf->Cell($w[1], $h, $barang->nama_barang, 1);
+            $x = $pdf->GetX();
+            $y = $pdf->GetY();
+            $pdf->MultiCell($w[2], 10, $barang->uraian_masalah, 1);
+            $pdf->SetXY($x + $w[2], $y);
+            $pdf->Cell($w[3], $h, $barang->keterangan, 1);
+            $pdf->Ln();
         }
 
         // Tanda tangan kiri
@@ -289,6 +307,7 @@ class CetakSuratController extends Controller
         $pdf->Output('I', 'backsite.cetak_surat.pdf'); // Output PDF langsung ke browser dengan nama file "surat.pdf"
         exit;
     }
+
 
 
     public function cetakdisposisi(Request $request, $id)
